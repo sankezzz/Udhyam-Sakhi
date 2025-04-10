@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.udyam.R
 import com.example.udyam.models.OrderNotification
 
-class OrderNotificationAdapter(private val orderList: List<OrderNotification>) :
-    RecyclerView.Adapter<OrderNotificationAdapter.OrderViewHolder>() {
+class OrderNotificationAdapter(
+    private var orderList: List<OrderNotification>
+) : RecyclerView.Adapter<OrderNotificationAdapter.OrderViewHolder>() {
 
     inner class OrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val status = itemView.findViewById<TextView>(R.id.orderStatus)
@@ -35,4 +36,9 @@ class OrderNotificationAdapter(private val orderList: List<OrderNotification>) :
     }
 
     override fun getItemCount() = orderList.size
+
+    fun updateData(newList: List<OrderNotification>) {
+        orderList = newList
+        notifyDataSetChanged()
+    }
 }
