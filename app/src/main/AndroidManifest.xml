@@ -13,11 +13,14 @@
         android:theme="@style/Base.Theme.Udyam"
         tools:targetApi="31">
         <activity
+            android:name=".Seller.StoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".Seller.AddThreadActivity"
             android:exported="false" />
         <activity
             android:name=".buyer.BuyerHomeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Seller.SellerHomeActivity"
             android:exported="false" />

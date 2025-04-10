@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.udyam" />
-                  <option name="mobileSdkAppId" value="1:23005222401:android:0de241523dc656a07d9200" />
-                  <option name="projectId" value="e-comm-ea6f3" />
-                  <option name="projectNumber" value="23005222401" />
+                  <option name="mobileSdkAppId" value="1:174000464177:android:84194f65898702ea049010" />
+                  <option name="projectId" value="hostel-app-b63df" />
+                  <option name="projectNumber" value="174000464177" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

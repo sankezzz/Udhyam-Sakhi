@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.udyam.databinding.ActivityAddThreadBinding
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import okhttp3.*
@@ -117,49 +116,67 @@ private lateinit var progressDialog: ProgressDialog
             return
         }
 
-        val thread = hashMapOf(
-            "title" to title,
-            "description" to description,
-            "imageUrl" to imageUrl,
-            "timestamp" to System.currentTimeMillis(),
-            "likeCount" to 0,
-            "shareCount" to 0
-        )
-
         val userId = auth.currentUser?.uid
-
         if (userId == null) {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
             return
         }
 
-        db.collection("threads")
-            .add(thread)
-            .addOnSuccessListener { docRef ->
-                db.collection("users").document(userId)
-                    .collection("myThreads")
-                    .document(docRef.id)
-                    .set(thread)
-                    .addOnSuccessListener {
-                        runOnUiThread {
-                            Toast.makeText(this, "Thread added successfully!", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, SellerHomeActivity::class.java))
-                            finish()
-                        }
+        progressDialog = ProgressDialog(this).apply {
+            setMessage("Posting thread...")
+            setCancelable(false)
+            show()
+        }
+
+        // 🔍 Get username from Firestore
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                val username = document.getString("name") ?: "Unknown"
+
+                val thread = hashMapOf(
+                    "title" to title,
+                    "description" to description,
+                    "imageUrl" to imageUrl,
+                    "timestamp" to System.currentTimeMillis(),
+                    "createdAt" to com.google.firebase.Timestamp.now(), // 👈 Optional: Firestore native Timestamp
+                    "likeCount" to 0,
+                    "shareCount" to 0,
+                    "userId" to userId,
+                    "username" to username
+                )
+
+
+                db.collection("threads")
+                    .add(thread)
+                    .addOnSuccessListener { docRef ->
+                        db.collection("users").document(userId)
+                            .collection("myThreads")
+                            .document(docRef.id)
+                            .set(thread)
+                            .addOnSuccessListener {
+                                progressDialog.dismiss()
+                                Toast.makeText(this, "Thread added successfully!", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, SellerHomeActivity::class.java))
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                progressDialog.dismiss()
+                                Toast.makeText(this, "Saved to threads but failed in myThreads", Toast.LENGTH_SHORT).show()
+                                Log.e("Firestore", "myThreads error: ", e)
+                            }
                     }
                     .addOnFailureListener { e ->
-                        runOnUiThread {
-                            Toast.makeText(this, "Saved to threads but failed in myThreads", Toast.LENGTH_SHORT).show()
-                            Log.e("Firestore", "myThreads error: ", e)
-                        }
+                        progressDialog.dismiss()
+                        Toast.makeText(this, "Failed to add thread: ${e.message}", Toast.LENGTH_LONG).show()
+                        Log.e("Firestore", "Error adding thread", e)
                     }
             }
             .addOnFailureListener { e ->
-                runOnUiThread {
-                    Toast.makeText(this, "Failed to add thread: ${e.message}", Toast.LENGTH_LONG).show()
-                    Log.e("Firestore", "Error adding thread", e)
-                }
+                progressDialog.dismiss()
+                Toast.makeText(this, "Failed to fetch username: ${e.message}", Toast.LENGTH_LONG).show()
+                Log.e("Firestore", "Error fetching username", e)
             }
     }
+
 
 }
