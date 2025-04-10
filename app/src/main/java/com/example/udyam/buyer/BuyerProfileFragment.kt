@@ -1,60 +1,91 @@
 package com.example.udyam.Buyer
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.udyam.R
+import com.example.udyam.auth.AuthActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BuyerProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BuyerProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var nameTv: TextView
+    private lateinit var phoneTv: TextView
+    private lateinit var addressTv: TextView
+    private lateinit var pincodeTv: TextView
+    private lateinit var emailTv: TextView
+
+    private val auth = FirebaseAuth.getInstance()
+    private val firestore = FirebaseFirestore.getInstance()
+    private lateinit var signOutBtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_buyer_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_buyer_profile, container, false)
+
+        // Initialize views
+        nameTv = view.findViewById(R.id.buyer_name_tv)
+        phoneTv = view.findViewById(R.id.buyer_phone_tv)
+        addressTv = view.findViewById(R.id.buyer_address_tv)
+        pincodeTv = view.findViewById(R.id.buyer_pincode_tv)
+        emailTv = view.findViewById(R.id.buyer_email_tv)
+        signOutBtn = view.findViewById(R.id.btn_sign_out)
+
+        fetchUserData()
+
+        signOutBtn.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(requireContext(), AuthActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BuyerProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BuyerProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun fetchUserData() {
+        val currentUser = auth.currentUser
+        val uid = currentUser?.uid
+
+        if (uid != null) {
+            firestore.collection("users").document(uid).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val name = document.getString("name") ?: "N/A"
+                        val phone = document.getString("contact") ?: "N/A"
+                        val address = document.getString("address") ?: "N/A"
+                        val pincode = document.getString("pincode") ?: "N/A"
+                        val email = document.getString("email") ?: "N/A"
+
+                        nameTv.text = "Name: $name"
+                        phoneTv.text = "Phone: $phone"
+                        addressTv.text = "Address: $address"
+                        pincodeTv.text = "Pincode: $pincode"
+                        emailTv.text = "Email: $email"
+                    } else {
+                        showToast("User data not found")
+                    }
                 }
-            }
+                .addOnFailureListener {
+                    showToast("Failed to fetch user data: ${it.message}")
+                }
+        } else {
+            showToast("User not logged in")
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

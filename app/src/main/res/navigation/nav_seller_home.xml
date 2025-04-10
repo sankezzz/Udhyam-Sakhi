@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_sellerHomeFragment_to_sellerProductsFragment"
             app:destination="@id/sellerProductsFragment" />
+        <action
+            android:id="@+id/action_sellerHomeFragment_to_sellerProfileFragment"
+            app:destination="@id/sellerProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/sellerCommunityFragment"
@@ -41,4 +44,9 @@
             android:id="@+id/action_sellerProductsFragment_to_sellerHomeFragment"
             app:destination="@id/sellerHomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/sellerProfileFragment"
+        android:name="com.example.udyam.Seller.fragments.SellerProfileFragment"
+        android:label="fragment_seller_profile"
+        tools:layout="@layout/fragment_seller_profile" />
 </navigation>

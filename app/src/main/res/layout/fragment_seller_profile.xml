@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="24dp"
-        tools:context=".Buyer.BuyerProfileFragment">
+        tools:context=".Seller.fragments.SellerProfileFragment">
 
         <!-- Profile Heading -->
         <TextView
@@ -23,10 +23,10 @@
 
         <!-- Full Name -->
         <TextView
-            android:id="@+id/buyer_name_tv"
+            android:id="@+id/seller_name_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Name: John Doe"
+            android:text="Name: Seller Name"
             android:textSize="16sp"
             android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@id/tvProfile"
@@ -35,49 +35,49 @@
 
         <!-- Phone Number -->
         <TextView
-            android:id="@+id/buyer_phone_tv"
+            android:id="@+id/seller_phone_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Phone: +91 9876543210"
             android:textSize="16sp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/buyer_name_tv"
+            app:layout_constraintTop_toBottomOf="@id/seller_name_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Address -->
+        <!-- Shop Address -->
         <TextView
-            android:id="@+id/buyer_address_tv"
+            android:id="@+id/seller_shop_address_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Address: 123, Main Street, City"
+            android:text="Shop Address: Market Road, City"
             android:textSize="16sp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/buyer_phone_tv"
+            app:layout_constraintTop_toBottomOf="@id/seller_phone_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Pincode -->
         <TextView
-            android:id="@+id/buyer_pincode_tv"
+            android:id="@+id/seller_pincode_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Pincode: 110011"
+            android:text="Pincode: 123456"
             android:textSize="16sp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/buyer_address_tv"
+            app:layout_constraintTop_toBottomOf="@id/seller_shop_address_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Email -->
         <TextView
-            android:id="@+id/buyer_email_tv"
+            android:id="@+id/seller_email_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Email: buyer@example.com"
+            android:text="Email: seller@example.com"
             android:textSize="16sp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/buyer_pincode_tv"
+            app:layout_constraintTop_toBottomOf="@id/seller_pincode_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -91,7 +91,7 @@
             android:layout_marginTop="32dp"
             android:backgroundTint="@color/primary"
             android:textColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@id/buyer_email_tv"
+            app:layout_constraintTop_toBottomOf="@id/seller_email_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
