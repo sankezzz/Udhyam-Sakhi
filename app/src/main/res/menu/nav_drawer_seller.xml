@@ -3,6 +3,11 @@
         android:id="@+id/nav_profile_seller"
         android:title="Profile"
         android:icon="@drawable/profile_icon" />
+
+    <item
+        android:id="@+id/nav_store_seller"
+        android:title="Your Store"
+        android:icon="@drawable/ic_store" />
     <item
         android:id="@+id/nav_orders_seller"
         android:title="Orders"
