@@ -123,6 +123,7 @@ class BuyerHomeActivity : AppCompatActivity() {
                     Toast.makeText(this, "Drawer: Profile Clicked", Toast.LENGTH_SHORT).show()
                 }
                 R.id.nav_orders -> {
+                    navController.navigate(R.id.buyerNotifFragment)
                     Toast.makeText(this, "Drawer: Orders Clicked", Toast.LENGTH_SHORT).show()
                 }
                 R.id.nav_logout -> {

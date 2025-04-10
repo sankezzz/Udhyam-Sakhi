@@ -5,33 +5,29 @@ import androidx.lifecycle.viewModelScope
 import com.example.udyam.RetrofitInstance
 import com.example.udyam.models.OrderNotification
 import com.example.udyam.utils.OrderHistoryManager
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class OrderViewModel : ViewModel() {
 
-    fun startPollingLatestOrder() {
+    fun fetchLatestOrderOnce() {
         viewModelScope.launch {
-            while (true) {
-                try {
-                    val order = RetrofitInstance.api.getLatestOrder()
-                    val item = order.items.firstOrNull()
+            try {
+                val order = RetrofitInstance.api.getLatestOrder()
+                val item = order.items.firstOrNull()
 
-                    if (item != null) {
-                        val orderNotif = OrderNotification(
-                            timestamp = order.timestamp,
-                            itemName = item.name,
-                            amount = "₹${item.price}",
-                            address = order.address,
-                            username = order.username
-                        )
-                        OrderHistoryManager.addOrder(orderNotif, order.payment_id)
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                if (item != null) {
+                    val orderNotif = OrderNotification(
+                        timestamp = order.timestamp,
+                        itemName = item.name,
+                        amount = "₹${item.price}",
+                        address = order.address,
+                        username = order.username
+                    )
+                    // Avoid adding duplicate payment_id
+                    OrderHistoryManager.addOrder(orderNotif, order.payment_id)
                 }
-
-                delay(10000L) // Poll every 10 seconds, tweak as needed
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
