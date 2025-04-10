@@ -13,11 +13,13 @@ import com.example.udyam.R
 import com.example.udyam.adapters.OrderNotificationAdapter
 import com.example.udyam.utils.OrderHistoryManager
 import com.example.udyam.viewmodels.OrderViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BuyerNotifFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: OrderNotificationAdapter
+    private lateinit var fabRefresh: FloatingActionButton
     private val orderViewModel: OrderViewModel by viewModels()
 
     override fun onCreateView(
@@ -31,11 +33,14 @@ class BuyerNotifFragment : Fragment() {
         adapter = OrderNotificationAdapter(emptyList())
         recyclerView.adapter = adapter
 
+        fabRefresh = view.findViewById(R.id.fabRefresh)
+        fabRefresh.setOnClickListener {
+            orderViewModel.fetchLatestOrderOnce()
+        }
+
         OrderHistoryManager.orderHistory.observe(viewLifecycleOwner, Observer { history ->
             adapter.updateData(history)
         })
-
-        orderViewModel.startPollingLatestOrder()
 
         return view
     }
