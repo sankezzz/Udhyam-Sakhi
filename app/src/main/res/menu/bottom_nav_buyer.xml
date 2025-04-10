@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/community_icon_white"
+        android:icon="@drawable/profile_icon"
         android:title="Profile"/>
 
 

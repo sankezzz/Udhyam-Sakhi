@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_dark">#bbbbbb</color>
+    <color name="primary">#aaaaaa</color>
+    <color name="primary_variant">#06625f</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="bottom_nav_background">#aaaaaa</color> <!-- slightly lighter for contrast in dark -->
+    <color name="card_background">#054640</color>        <!-- Deep teal for dark cards -->
+    <color name="text_primary">#bbbbbb</color>           <!-- Soft white text -->
+    <color name="text_secondary">#aaaaaa</color>         <!-- Lighter gray -->
+
+</resources>
