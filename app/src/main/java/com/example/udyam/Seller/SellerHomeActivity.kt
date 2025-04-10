@@ -75,6 +75,11 @@ class SellerHomeActivity : AppCompatActivity() {
                     Toast.makeText(this, "Orders clicked", Toast.LENGTH_SHORT).show()
                    navController.navigate(R.id.sellerProductsFragment)
                 }
+                R.id.nav_store_seller ->{
+                    val intent = Intent(this, StoreActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
                 R.id.nav_logout_seller -> {
                     Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show()
                     auth.signOut()

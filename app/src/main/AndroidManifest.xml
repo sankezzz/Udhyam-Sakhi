@@ -24,6 +24,9 @@
             android:name=".Seller.AddProductActivity"
             android:exported="false" />
         <activity
+            android:name=".Seller.StoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".auth.AuthActivity"
             android:exported="true">
             <intent-filter>
