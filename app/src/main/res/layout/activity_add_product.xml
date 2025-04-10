@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/main"
-            android:background="#F5F5F5"
+            android:background="#FAF8FF"
             tools:context=".AddThreadActivity">
 
             <Toolbar
@@ -23,9 +23,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:title="Add a Product"
-                android:navigationIcon="@drawable/ic_back"/>
+                android:background="@android:color/white"
+                android:navigationIcon="@drawable/ic_back"
+                android:titleTextColor="#000000"/>
 
-            <!-- Username Input Section -->
+            <!-- Item Name -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_itemname"
                 android:layout_width="0dp"
@@ -41,32 +43,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Item name"
+                    android:backgroundTint="#FAF9F6"
+                    android:textColor="#000000"
+                    android:textColorHint="#908CB8"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Product Image -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/img_card"
                 android:layout_width="240dp"
                 android:layout_height="140dp"
                 android:layout_margin="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:cardCornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_itemname">
+                app:layout_constraintTop_toBottomOf="@id/til_itemname"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp">
+
                 <ImageView
                     android:id="@+id/thread_img"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/upload_img"
-                    />
+                    android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
 
-            <!-- Title Input Section -->
+            <!-- Price -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_rate"
                 android:layout_width="0dp"
-                android:layout_margin="16dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img_card"
@@ -77,14 +85,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Price in rupees"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:backgroundTint="#FAF9F6"
+                    android:textColor="#000000"
+                    android:textColorHint="#908CB8" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Quantity -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_quantity"
                 android:layout_width="0dp"
-                android:layout_margin="16dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_rate"
@@ -95,10 +107,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Quantity"
-                    android:inputType="number" />
+                    android:backgroundTint="#FAF9F6"
+                    android:inputType="number"
+                    android:textColor="#000000"
+                    android:textColorHint="#908CB8" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Description Input Section -->
+            <!-- Description -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_description"
                 android:layout_width="0dp"
@@ -106,16 +121,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_quantity"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_description"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_margin="16dp"
                     android:hint="Enter Description"
                     android:inputType="textMultiLine"
+                    android:backgroundTint="#FAF9F6"
                     android:gravity="top|start"
+                    android:textColor="#000000"
+                    android:textColorHint="#908CB8"
                     android:scrollbars="vertical" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,16 +143,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="64dp"
-                android:text="Submit Thread"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:text="Publish Your Product"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="@color/primary"
+                app:cornerRadius="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_description"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:backgroundTint="#E3262E"
-                android:textColor="#FFFFFF" />
-
+                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
