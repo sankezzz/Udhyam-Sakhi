@@ -47,6 +47,8 @@ class SellerProductsFragment : Fragment() {
         binding.addProductFab.setOnClickListener {
             val intent = Intent(activity, AddProductActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
+
         }
     }
 
