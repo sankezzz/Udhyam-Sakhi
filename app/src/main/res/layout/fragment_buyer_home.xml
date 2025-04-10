@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trending Products"
+            android:text="Trending Stores"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginTop="8dp"
@@ -55,7 +55,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Explore All Products"
+            android:text="Explore All Stores"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginBottom="4dp"/>

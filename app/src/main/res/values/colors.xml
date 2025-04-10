@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="bottom_nav_background">#ADEFD1</color>
+    <color name="primary_dark">#054640</color>    <!-- (5,70,64) -->
+    <color name="primary">#005d4b</color>         <!-- (0,93,75) -->
+    <color name="primary_variant">#06625f</color> <!-- (6,98,95) -->
+
+    <color name="light_gray">#bbbbbb</color>      <!-- (187,187,187) -->
+    <color name="medium_gray">#aaaaaa</color>     <!-- (170,170,170) -->
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="bottom_nav_background">#06625f</color> <!-- primary_variant -->
+    <color name="card_background">#ffffff</color>         <!-- White for light mode -->
+    <color name="text_primary">#000000</color>           <!-- Black text -->
+    <color name="text_secondary">#666666</color>         <!-- Grey text -->
+
 </resources>
