@@ -1,18 +1,20 @@
 package com.example.udyam.buyer
 
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.*
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.udyam.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
 class BuyerHomeActivity : AppCompatActivity() {
@@ -20,13 +22,25 @@ class BuyerHomeActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Enable edge-to-edge layout before setContentView
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buyer_home)
 
-        // Handle system bars for edge-to-edge UI
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        // Make system bars transparent
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+
+        // Set light/dark icons depending on background
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = true  // Use false if your background is dark
+            isAppearanceLightNavigationBars = true
+        }
+
+        // Apply padding for system bars (if needed)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
@@ -34,7 +48,6 @@ class BuyerHomeActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_home) as NavHostFragment
         val navController = navHostFragment.navController
-
 
         val btnNotification = findViewById<ImageView>(R.id.btn_notification)
 
@@ -71,17 +84,31 @@ class BuyerHomeActivity : AppCompatActivity() {
             }
         }
 
+        val fab = findViewById<FloatingActionButton>(R.id.fab_action_whatsapp)
+        fab.setOnClickListener {
+            val phoneNumber = "+15556406473"
+            val message = "hi"
+            try {
+                val intent = Intent(Intent.ACTION_VIEW)
+                val url = "https://api.whatsapp.com/send?phone=$phoneNumber&text=${Uri.encode(message)}"
+                intent.setPackage("com.whatsapp")
+                intent.data = Uri.parse(url)
+                startActivity(intent)
+            } catch (e: Exception) {
+                Toast.makeText(this, "WhatsApp not installed!", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+            }
+        }
+
         // DrawerLayout and NavigationView
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
         val btnSideNav = findViewById<ImageView>(R.id.btn_side_nav)
 
-        // Open drawer on clicking the side nav icon
         btnSideNav.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        // Handle drawer item clicks
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_profile -> {
