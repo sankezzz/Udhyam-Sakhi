@@ -35,6 +35,14 @@ class BuyerHomeActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_home) as NavHostFragment
         val navController = navHostFragment.navController
 
+
+        val btnNotification = findViewById<ImageView>(R.id.btn_notification)
+
+        btnNotification.setOnClickListener {
+            Toast.makeText(this, "Notifications", Toast.LENGTH_SHORT).show()
+            navController.navigate(R.id.buyerNotifFragment)
+        }
+
         // Bottom Navigation setup
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView_buyer)
         val titleTextView = findViewById<TextView>(R.id.text_title)
