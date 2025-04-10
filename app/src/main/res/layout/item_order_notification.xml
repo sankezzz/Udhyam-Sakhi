@@ -1,44 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    android:background="@color/card_background">
+    android:layout_marginTop="4dp"
+    android:layout_marginHorizontal="8dp"
+    android:elevation="4dp"
+    android:padding="12dp"
+    android:radius="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvOrderStatus"
+            android:id="@+id/orderStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order Placed"
+            android:text="Ordered on 10-04-2025 22:50:16"
+            android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textColor="@color/text_primary" />
+            android:layout_marginBottom="4dp" />
 
         <TextView
-            android:id="@+id/tvStoreName"
+            android:id="@+id/orderItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Store: ABC Mart"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginTop="4dp" />
+            android:text="Item: Handcrafted Mug"
+            android:textColor="#444444"
+            android:textSize="15sp"
+            android:layout_marginBottom="2dp"/>
 
         <TextView
-            android:id="@+id/tvPricePaid"
+            android:id="@+id/orderAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paid: ₹499"
+            android:text="Amount: ₹250"
+            android:textColor="#444444"
+            android:textSize="15sp"
+            android:layout_marginBottom="2dp"/>
+
+        <TextView
+            android:id="@+id/orderAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address: Bhupeshnagar, Nagpur"
+            android:textColor="#444444"
             android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginTop="2dp" />
+            android:layout_marginBottom="2dp"/>
+
+        <TextView
+            android:id="@+id/orderUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ordered by: Sanket"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

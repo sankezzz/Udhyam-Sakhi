@@ -9,13 +9,15 @@ import com.example.udyam.R
 import com.example.udyam.models.OrderNotification
 
 class OrderNotificationAdapter(
-    private val orderList: List<OrderNotification>
+    private var orderList: List<OrderNotification>
 ) : RecyclerView.Adapter<OrderNotificationAdapter.OrderViewHolder>() {
 
     inner class OrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val orderStatus: TextView = itemView.findViewById(R.id.tvOrderStatus)
-        val storeName: TextView = itemView.findViewById(R.id.tvStoreName)
-        val pricePaid: TextView = itemView.findViewById(R.id.tvPricePaid)
+        val status = itemView.findViewById<TextView>(R.id.orderStatus)
+        val itemName = itemView.findViewById<TextView>(R.id.orderItemName)
+        val amount = itemView.findViewById<TextView>(R.id.orderAmount)
+        val address = itemView.findViewById<TextView>(R.id.orderAddress)
+        val username = itemView.findViewById<TextView>(R.id.orderUser)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -26,10 +28,17 @@ class OrderNotificationAdapter(
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         val order = orderList[position]
-        holder.orderStatus.text = order.orderStatus
-        holder.storeName.text = "Store: ${order.storeName}"
-        holder.pricePaid.text = "Paid: ${order.pricePaid}"
+        holder.status.text = "Ordered on ${order.timestamp}"
+        holder.itemName.text = "Item: ${order.itemName}"
+        holder.amount.text = "Amount: ${order.amount}"
+        holder.address.text = "Address: ${order.address}"
+        holder.username.text = "Ordered by: ${order.username}"
     }
 
-    override fun getItemCount(): Int = orderList.size
+    override fun getItemCount() = orderList.size
+
+    fun updateData(newList: List<OrderNotification>) {
+        orderList = newList
+        notifyDataSetChanged()
+    }
 }
