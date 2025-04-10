@@ -14,5 +14,8 @@
     <color name="card_background">#ffffff</color>         <!-- White for light mode -->
     <color name="text_primary">#000000</color>           <!-- Black text -->
     <color name="text_secondary">#666666</color>         <!-- Grey text -->
+    <color name="bg_light">#FAFAFA</color>
+    <color name="bg_button">#E8EAF6</color>
+    <color name="icon_primary">#3F51B5</color>
 
 </resources>
