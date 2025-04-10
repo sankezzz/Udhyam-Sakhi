@@ -9,13 +9,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.*
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.udyam.R
+import com.example.udyam.auth.AuthActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class BuyerHomeActivity : AppCompatActivity() {
 
@@ -26,6 +30,9 @@ class BuyerHomeActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buyer_home)
+
+         val auth = FirebaseAuth.getInstance()
+         val firestore = FirebaseFirestore.getInstance()
 
         // Make system bars transparent
         window.statusBarColor = Color.TRANSPARENT
@@ -112,12 +119,18 @@ class BuyerHomeActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_profile -> {
+                    navController.navigate(R.id.buyerProfileFragment2)
                     Toast.makeText(this, "Drawer: Profile Clicked", Toast.LENGTH_SHORT).show()
                 }
                 R.id.nav_orders -> {
                     Toast.makeText(this, "Drawer: Orders Clicked", Toast.LENGTH_SHORT).show()
                 }
                 R.id.nav_logout -> {
+                    auth.signOut()
+                    val intent = Intent(this, AuthActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
                     Toast.makeText(this, "Drawer: Logout Clicked", Toast.LENGTH_SHORT).show()
                 }
             }
