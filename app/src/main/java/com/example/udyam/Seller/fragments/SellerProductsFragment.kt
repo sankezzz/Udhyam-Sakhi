@@ -38,7 +38,7 @@ class SellerProductsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = ProductAdapter(productList)
-        binding.productsRv.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.productsRv.layoutManager = GridLayoutManager(requireContext(), 1)
 
         binding.productsRv.adapter = adapter
 
