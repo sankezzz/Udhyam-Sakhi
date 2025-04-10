@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/sellerHomeFragment"
-        android:name="com.example.udyam.Seller.SellerHomeFragment"
+        android:name="com.example.udyam.Seller.fragments.SellerHomeFragment"
         android:label="fragment_seller_home"
         tools:layout="@layout/fragment_seller_home" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/sellerCommunityFragment"
-        android:name="com.example.udyam.Seller.SellerCommunityFragment"
+        android:name="com.example.udyam.Seller.fragments.SellerCommunityFragment"
         android:label="fragment_seller_community"
         tools:layout="@layout/fragment_seller_community" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/sellerProductsFragment"
-        android:name="com.example.udyam.Seller.SellerProductsFragment"
+        android:name="com.example.udyam.Seller.fragments.SellerProductsFragment"
         android:label="fragment_seller_products"
         tools:layout="@layout/fragment_seller_products" >
         <action

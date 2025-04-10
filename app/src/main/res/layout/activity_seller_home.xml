@@ -57,15 +57,7 @@
         </androidx.fragment.app.FragmentContainerView>
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/chatbotFAB"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:backgroundTint="@color/black"
-            android:contentDescription="TODO"
-            app:layout_constraintEnd_toEndOf="@id/bottomNavigationView"
-            app:maxImageSize="60dp"
-            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"/>
+
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"

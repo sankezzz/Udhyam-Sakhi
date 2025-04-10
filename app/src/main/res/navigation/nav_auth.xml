@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.example.udyam.IntroFragment"
+        android:name="com.example.udyam.auth.fragments.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.udyam.LoginFragment"
+        android:name="com.example.udyam.auth.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.udyam.SignupFragment"
+        android:name="com.example.udyam.auth.fragments.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgotFragment"
-        android:name="com.example.udyam.ForgotFragment"
+        android:name="com.example.udyam.auth.fragments.ForgotFragment"
         android:label="fragment_forgot"
         tools:layout="@layout/fragment_forgot" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.udyam.ProfileFragment"
+        android:name="com.example.udyam.auth.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
 

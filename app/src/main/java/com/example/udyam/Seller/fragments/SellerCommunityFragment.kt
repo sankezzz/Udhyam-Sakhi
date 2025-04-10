@@ -1,4 +1,4 @@
-package com.example.udyam.Seller
+package com.example.udyam.Seller.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import com.example.udyam.R
 
 
-
-class SellerHomeFragment : Fragment() {
+class SellerCommunityFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +21,12 @@ class SellerHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seller_home, container, false)
+        return inflater.inflate(R.layout.fragment_seller_community, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-}
+
+    }

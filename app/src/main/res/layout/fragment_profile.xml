@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="#F8F8FC"
         android:padding="16dp"
-        tools:context=".ProfileFragment">
+        tools:context=".auth.fragments.ProfileFragment">
 
         <ScrollView
             android:layout_width="0dp"

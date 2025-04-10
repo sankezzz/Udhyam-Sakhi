@@ -1,4 +1,4 @@
-package com.example.udyam
+package com.example.udyam.auth.fragments
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import com.example.udyam.R
 import com.example.udyam.databinding.FragmentSignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,7 +33,7 @@ class SignupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_signup, container ,false, )
+        binding = DataBindingUtil.inflate(inflater , R.layout.fragment_signup, container ,false, )
         return binding.root
     }
 

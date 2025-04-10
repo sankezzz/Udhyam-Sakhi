@@ -1,4 +1,4 @@
-package com.example.udyam
+package com.example.udyam.auth.fragments
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import com.example.udyam.R
 import com.example.udyam.databinding.FragmentForgotBinding
 import com.google.firebase.auth.FirebaseAuth
 

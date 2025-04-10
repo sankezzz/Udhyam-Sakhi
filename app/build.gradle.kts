@@ -3,8 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
 
-        id("androidx.navigation.safeargs.kotlin")
-    
+    id("androidx.navigation.safeargs.kotlin")
+
 
 }
 
@@ -59,4 +59,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Glide for image loading
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // OkHttp for HTTP network requests
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

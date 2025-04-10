@@ -32,12 +32,7 @@ class SellerHomeActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val titleTextView = findViewById<TextView>(R.id.text_title)
 
-        // Optional: FloatingActionButton click
-        val chatbotFAB = findViewById<FloatingActionButton>(R.id.chatbotFAB)
-        chatbotFAB.setOnClickListener {
-            Toast.makeText(this, "Chatbot Coming Soon!", Toast.LENGTH_SHORT).show()
-            // startActivity(Intent(this, SellerChatbotActivity::class.java))
-        }
+
 
 
 

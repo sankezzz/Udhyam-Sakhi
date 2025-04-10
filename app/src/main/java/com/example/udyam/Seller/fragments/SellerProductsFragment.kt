@@ -1,18 +1,22 @@
-package com.example.udyam
+package com.example.udyam.Seller.fragments
 
+import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
-import com.example.udyam.databinding.FragmentIntroBinding
+import com.example.udyam.R
+import com.example.udyam.Seller.AddProductActivity
+import com.example.udyam.databinding.FragmentSellerProductsBinding
 
 
-class IntroFragment : Fragment() {
+class SellerProductsFragment : Fragment() {
 
-    private lateinit var binding :FragmentIntroBinding
+
+    private lateinit var binding :FragmentSellerProductsBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,24 +28,18 @@ class IntroFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater , R.layout.fragment_intro, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_seller_products , container , false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.registerButton.setOnClickListener {
-            findNavController().navigate(R.id.action_introFragment_to_signupFragment)
 
-        }
-        binding.loginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_introFragment_to_loginFragment)
+
+        binding.addProductFab.setOnClickListener {
+            val i = Intent(activity , AddProductActivity::class.java)
+            startActivity(i)
         }
     }
-
-
-
-
 }
