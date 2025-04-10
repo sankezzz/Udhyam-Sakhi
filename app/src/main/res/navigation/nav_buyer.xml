@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_buyer"
+    app:startDestination="@id/buyerHomeFragment2">
+    <fragment
+        android:id="@+id/buyerHomeFragment2"
+        android:name="com.example.udyam.Buyer.BuyerHomeFragment"
+        android:label="BuyerHomeFragment" >
+        <action
+            android:id="@+id/action_buyerHomeFragment2_to_buyerProfileFragment2"
+            app:destination="@id/buyerProfileFragment2" />
+        <action
+            android:id="@+id/action_buyerHomeFragment2_to_buyerCartFragment2"
+            app:destination="@id/buyerCartFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerCartFragment2"
+        android:name="com.example.udyam.Buyer.BuyerCartFragment"
+        android:label="fragment_buyer_cart"
+        tools:layout="@layout/fragment_buyer_cart" >
+        <action
+            android:id="@+id/action_buyerCartFragment2_to_buyerHomeFragment2"
+            app:destination="@id/buyerHomeFragment2" />
+        <action
+            android:id="@+id/action_buyerCartFragment2_to_buyerProfileFragment2"
+            app:destination="@id/buyerProfileFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerProfileFragment2"
+        android:name="com.example.udyam.Buyer.BuyerProfileFragment"
+        android:label="fragment_buyer_profile"
+        tools:layout="@layout/fragment_buyer_profile" >
+        <action
+            android:id="@+id/action_buyerProfileFragment2_to_buyerCartFragment2"
+            app:destination="@id/buyerCartFragment2" />
+        <action
+            android:id="@+id/action_buyerProfileFragment2_to_buyerHomeFragment2"
+            app:destination="@id/buyerHomeFragment2" />
+    </fragment>
+</navigation>
