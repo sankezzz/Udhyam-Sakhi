@@ -1,7 +1,6 @@
 package com.example.udyam.Seller
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -19,13 +18,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
-import java.util.concurrent.TimeUnit
 
 class AddProductActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityAddProductBinding
     private val PICK_IMAGE_REQUEST = 1
     private var selectedImageUri: Uri? = null
-    private lateinit var progressDialog: ProgressDialog
     private val apiKey = "a55a29c04fe50e932764f6e4a1ad0361" // Replace with your actual ImgBB API key
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,18 +66,11 @@ class AddProductActivity : AppCompatActivity() {
     }
 
     private fun uploadImageToImgBB(imageUri: Uri) {
-        showProgressDialog("Uploading image...")
-
         val inputStream = contentResolver.openInputStream(imageUri)
         val imageBytes = inputStream!!.readBytes()
         val base64Image = Base64.encodeToString(imageBytes, Base64.DEFAULT)
 
-        val client = OkHttpClient.Builder()
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .build()
-
+        val client = OkHttpClient()
         val requestBody = FormBody.Builder()
             .add("key", apiKey)
             .add("image", base64Image)
@@ -93,19 +84,15 @@ class AddProductActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    hideProgressDialog()
                     Toast.makeText(this@AddProductActivity, "Image upload failed: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                     Log.e("ImgBB Upload", "Error: ", e)
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
-                runOnUiThread { hideProgressDialog() }
-
                 val responseBody = response.body?.string()
                 Log.d("ImgBB Upload", "Response: $responseBody")
                 val json = JSONObject(responseBody ?: "")
-
                 if (json.has("data")) {
                     val link = json.getJSONObject("data").getString("url")
                     runOnUiThread {
@@ -123,15 +110,12 @@ class AddProductActivity : AppCompatActivity() {
     }
 
     private fun saveProductToFirestore(imageUrl: String) {
-        showProgressDialog("Saving product...")
-
         val name = binding.etItemname.text.toString().trim()
         val price = binding.etRate.text.toString().trim()
         val quantity = binding.etQuantity.text.toString().trim()
         val desc = binding.etDescription.text.toString().trim()
 
         if (name.isBlank() || price.isBlank() || quantity.isBlank() || desc.isBlank()) {
-            hideProgressDialog()
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             return
         }
@@ -148,7 +132,6 @@ class AddProductActivity : AppCompatActivity() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         if (userId == null) {
-            hideProgressDialog()
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
             Log.e("Firestore", "User ID is null")
             return
@@ -157,19 +140,18 @@ class AddProductActivity : AppCompatActivity() {
         db.collection("products")
             .add(product)
             .addOnSuccessListener { docRef ->
+                Log.d("Firestore", "Product added with ID: ${docRef.id}")
                 db.collection("users").document(userId).collection("myProducts")
                     .document(docRef.id)
                     .set(product)
                     .addOnSuccessListener {
                         runOnUiThread {
-                            hideProgressDialog()
                             Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                     }
                     .addOnFailureListener { e ->
                         runOnUiThread {
-                            hideProgressDialog()
                             Toast.makeText(this, "Added to 'products' but failed in 'myProducts': ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                             Log.e("Firestore", "myProducts error: ", e)
                         }
@@ -177,23 +159,10 @@ class AddProductActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 runOnUiThread {
-                    hideProgressDialog()
                     Toast.makeText(this, "Failed to add product: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                     Log.e("Firestore", "Error adding product", e)
                 }
             }
     }
-
-    private fun showProgressDialog(message: String) {
-        progressDialog = ProgressDialog(this)
-        progressDialog.setMessage(message)
-        progressDialog.setCancelable(false)
-        progressDialog.show()
-    }
-
-    private fun hideProgressDialog() {
-        if (::progressDialog.isInitialized && progressDialog.isShowing) {
-            progressDialog.dismiss()
-        }
-    }
 }
+//
