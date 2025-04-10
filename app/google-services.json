@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "23005222401",
+    "project_id": "e-comm-ea6f3",
+    "storage_bucket": "e-comm-ea6f3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23005222401:android:0de241523dc656a07d9200",
+        "android_client_info": {
+          "package_name": "com.example.udyam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB03Zf6AJ45lQ7Tw2XcStlbuYQFKEhGOnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

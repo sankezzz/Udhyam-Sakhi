@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_seller_home"
+    app:startDestination="@id/sellerHomeFragment">
+
+    <fragment
+        android:id="@+id/sellerHomeFragment"
+        android:name="com.example.udyam.Seller.SellerHomeFragment"
+        android:label="fragment_seller_home"
+        tools:layout="@layout/fragment_seller_home" >
+        <action
+            android:id="@+id/action_sellerHomeFragment_to_sellerCommunityFragment"
+            app:destination="@id/sellerCommunityFragment" />
+        <action
+            android:id="@+id/action_sellerHomeFragment_to_sellerProductsFragment"
+            app:destination="@id/sellerProductsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerCommunityFragment"
+        android:name="com.example.udyam.Seller.SellerCommunityFragment"
+        android:label="fragment_seller_community"
+        tools:layout="@layout/fragment_seller_community" >
+        <action
+            android:id="@+id/action_sellerCommunityFragment_to_sellerProductsFragment"
+            app:destination="@id/sellerProductsFragment" />
+        <action
+            android:id="@+id/action_sellerCommunityFragment_to_sellerHomeFragment"
+            app:destination="@id/sellerHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerProductsFragment"
+        android:name="com.example.udyam.Seller.SellerProductsFragment"
+        android:label="fragment_seller_products"
+        tools:layout="@layout/fragment_seller_products" >
+        <action
+            android:id="@+id/action_sellerProductsFragment_to_sellerCommunityFragment"
+            app:destination="@id/sellerCommunityFragment" />
+        <action
+            android:id="@+id/action_sellerProductsFragment_to_sellerHomeFragment"
+            app:destination="@id/sellerHomeFragment" />
+    </fragment>
+</navigation>

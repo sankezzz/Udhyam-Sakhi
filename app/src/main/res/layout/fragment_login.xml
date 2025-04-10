@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:context=".LoginFragment">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <ImageView
+                android:layout_marginTop="48dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/loginimage"/>
+
+
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="start"
+                android:layout_marginTop="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Hi!, Welcome Back 👋"
+                android:layout_marginLeft="10dp"
+                android:textSize="30sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent">
+
+
+                <EditText
+                    android:id="@+id/loginetemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Email"
+                    android:outlineAmbientShadowColor="@color/black"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    tools:background="@android:color/transparent" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextPasswordInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:background="@android:color/transparent"
+                android:padding="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" >
+
+                <EditText
+                    android:id="@+id/loginetpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Password"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:maxLength="25"
+                    android:outlineAmbientShadowColor="@color/black"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    tools:background="@android:color/transparent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+
+                android:id="@+id/forgot_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_gravity="start"
+                android:layout_marginTop="2dp"
+                android:text="Forgot Password" />
+
+
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+
+                android:text="Login"
+                android:textSize="16sp"
+                android:layout_marginTop="25dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/signInTextToSignUp"
+                android:layout_height="wrap_content"
+
+                android:text="Create a new account"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/black"/>
+
+
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
