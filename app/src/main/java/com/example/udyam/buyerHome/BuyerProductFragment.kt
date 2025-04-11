@@ -1,5 +1,6 @@
 package com.example.udyam.Buyer
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ class BuyerProductFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun fetchStoresFromFirestore() {
         firestore.collection("stores")
             .get()
