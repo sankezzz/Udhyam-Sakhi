@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="12dp"
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="3dp"
+    android:padding="10dp"
+    card_view:strokeColor="#008B8B"
+    card_view:strokeWidth="2dp"
+    android:backgroundTint="@color/white"
     android:background="@color/card_background">
 
     <LinearLayout
@@ -40,4 +44,4 @@
             android:text="₹599"
             android:textColor="@color/text_secondary"/>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
