@@ -33,7 +33,9 @@ class StoreAdapter(private val storeList: List<StoreModel>) :
 
         Glide.with(holder.itemView.context)
             .load(store.imageResId)
+            .placeholder(R.drawable.handmade1) // 👈 your placeholder image here
             .into(holder.storeImage)
+
 
         // On click, open StoresProductActivity and pass the UID
         holder.itemView.setOnClickListener {
