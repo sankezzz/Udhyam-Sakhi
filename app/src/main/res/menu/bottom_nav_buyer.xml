@@ -11,9 +11,9 @@
         android:title="Products"/>
 
     <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/profile_icon"
-        android:title="Profile"/>
+        android:id="@+id/nav_cart"
+        android:icon="@drawable/cart"
+        android:title="Cart"/>
 
 
 
