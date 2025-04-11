@@ -22,32 +22,45 @@ class BuyerHomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_buyer_home, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val trendingRecycler = view.findViewById<RecyclerView>(R.id.rvTrendingProducts)
         val exploreRecycler = view.findViewById<RecyclerView>(R.id.rvExploreProducts)
 
-        // Sample product list
-        val sampleProducts = listOf(
-            Product("Handmade Basket", "250", "Woven with love", "https://via.placeholder.com/150"),
-            Product("Clay Pot", "180", "Organic Clay pot", "https://via.placeholder.com/150"),
-            Product("Wool Shawl", "550", "Perfect for winter", "https://via.placeholder.com/150"),
-            Product("Bamboo Lamp", "460", "Eco-friendly decor", "https://via.placeholder.com/150")
+        val sampleStores = listOf(
+            StoreModel("Aarti's Decor", "Jalandhar", "https://via.placeholder.com/150", "uid1"),
+            StoreModel("Pottery Wonders", "Jalandhar", "https://via.placeholder.com/150", "uid2"),
+            StoreModel("Shawl Boutique", "Jalandhar", "https://via.placeholder.com/150", "uid3"),
+            StoreModel("Eco Home", "Jalandhar", "https://via.placeholder.com/150", "uid4"),
+            StoreModel("Crafts by Meera", "Jalandhar", "https://via.placeholder.com/150", "uid1"),
+            StoreModel("Pottery Wonders", "Jaipur", "https://via.placeholder.com/150", "uid2"),
+            StoreModel("Shawl Boutique", "Kashmir", "https://via.placeholder.com/150", "uid3"),
+            StoreModel("Eco Home", "Shillong", "https://via.placeholder.com/150", "uid4"),
+            StoreModel("Crafts by Meera", "Delhi", "https://via.placeholder.com/150", "uid1"),
+            StoreModel("Pottery Wonders", "Jaipur", "https://via.placeholder.com/150", "uid2"),
+            StoreModel("Shawl Boutique", "Kashmir", "https://via.placeholder.com/150", "uid3"),
+            StoreModel("Eco Home", "Shillong", "https://via.placeholder.com/150", "uid4")
         )
 
-        // Create a shared click listener for both adapters
-        val productClickListener: (Product) -> Unit = { product ->
-            Toast.makeText(requireContext(), "Clicked: ${product.name}", Toast.LENGTH_SHORT).show()
-            // You can navigate to a product detail screen here if needed
+        val storeClickListener: (StoreModel) -> Unit = { store ->
+            Toast.makeText(requireContext(), "Clicked: ${store.storeName}", Toast.LENGTH_SHORT).show()
+            // Navigate to store details if needed
         }
 
-        // Setup Trending RecyclerView (Horizontal)
         trendingRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        trendingRecycler.adapter = ProductAdapter(sampleProducts, productClickListener)
+        trendingRecycler.adapter = StoreAdapter(sampleStores)
 
-        // Setup Explore RecyclerView (Grid)
-        exploreRecycler.layoutManager = GridLayoutManager(requireContext(), 2)
-        exploreRecycler.adapter = ProductAdapter(sampleProducts, productClickListener)
+        exploreRecycler.layoutManager = GridLayoutManager(requireContext(), 1)
+        exploreRecycler.adapter = StoreAdapter(sampleStores)
+
+        trendingRecycler.setHasFixedSize(true)
+        trendingRecycler.isNestedScrollingEnabled = false
+
+
+
     }
+
+
 }

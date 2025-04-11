@@ -84,7 +84,7 @@ class BuyerHomeActivity : AppCompatActivity() {
         }
 
         // Floating Action Button for WhatsApp
-        findViewById<FloatingActionButton>(R.id.fab_action_whatsapp).setOnClickListener {
+        findViewById<ImageView>(R.id.fab_action_whatsapp).setOnClickListener {
             val phoneNumber = "+15556406473"
             val message = "hi"
             val url = "https://api.whatsapp.com/send?phone=$phoneNumber&text=${Uri.encode(message)}"

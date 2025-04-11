@@ -21,7 +21,7 @@
 
         <ImageView
             android:id="@+id/imgExploreProduct"
-            android:layout_width="120dp"
+            android:layout_width="220dp"
             android:layout_height="120dp"
             android:scaleType="centerCrop"
             android:src="@drawable/loginimage" />
