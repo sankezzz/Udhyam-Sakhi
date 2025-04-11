@@ -22,119 +22,123 @@ import com.google.firebase.firestore.FirebaseFirestore
 class BuyerHomeActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Enable edge-to-edge layout before setContentView
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buyer_home)
 
-         val auth = FirebaseAuth.getInstance()
-         val firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
-        // Make system bars transparent
+        // Transparent system bars
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
 
-        // Set light/dark icons depending on background
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = true  // Use false if your background is dark
+            isAppearanceLightStatusBars = true
             isAppearanceLightNavigationBars = true
         }
 
-        // Apply padding for system bars (if needed)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Navigation Controller setup
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_home) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val btnNotification = findViewById<ImageView>(R.id.btn_notification)
-
-        btnNotification.setOnClickListener {
-            Toast.makeText(this, "Notifications", Toast.LENGTH_SHORT).show()
+        // Notifications Button
+        findViewById<ImageView>(R.id.btn_notification).setOnClickListener {
+            showToast("Notifications")
             navController.navigate(R.id.buyerNotifFragment)
         }
 
-        // Bottom Navigation setup
+        // Bottom Navigation
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView_buyer)
         val titleTextView = findViewById<TextView>(R.id.text_title)
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home_buyer -> {
-                    Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
-                    navController.navigate(R.id.buyerHomeFragment2)
+                    navigateWithToast("Home") { navController.navigate(R.id.buyerHomeFragment2) }
                     true
                 }
-
                 R.id.nav_products_buyer -> {
-                    Toast.makeText(this, "Products", Toast.LENGTH_SHORT).show()
-                    navController.navigate(R.id.buyerProductFragment)
+                    navigateWithToast("Products") { navController.navigate(R.id.buyerProductFragment) }
                     true
                 }
-
-                R.id.nav_profile -> {
-                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
-                    navController.navigate(R.id.buyerProfileFragment2)
+                R.id.nav_cart -> {
+                    navigateWithToast("Cart") {
+                        val intent = Intent(this, CartActivity::class.java)
+                        startActivity(intent)
+                    }
                     true
                 }
-
                 else -> false
             }
         }
 
-        val fab = findViewById<FloatingActionButton>(R.id.fab_action_whatsapp)
-        fab.setOnClickListener {
+        // Floating Action Button for WhatsApp
+        findViewById<FloatingActionButton>(R.id.fab_action_whatsapp).setOnClickListener {
             val phoneNumber = "+15556406473"
             val message = "hi"
+            val url = "https://api.whatsapp.com/send?phone=$phoneNumber&text=${Uri.encode(message)}"
             try {
-                val intent = Intent(Intent.ACTION_VIEW)
-                val url = "https://api.whatsapp.com/send?phone=$phoneNumber&text=${Uri.encode(message)}"
-                intent.setPackage("com.whatsapp")
-                intent.data = Uri.parse(url)
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+                    setPackage("com.whatsapp")
+                }
                 startActivity(intent)
             } catch (e: Exception) {
-                Toast.makeText(this, "WhatsApp not installed!", Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
+                showToast("WhatsApp not installed!")
             }
         }
 
-        // DrawerLayout and NavigationView
+        // Drawer Setup
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
-        val btnSideNav = findViewById<ImageView>(R.id.btn_side_nav)
 
-        btnSideNav.setOnClickListener {
+        findViewById<ImageView>(R.id.btn_side_nav).setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_profile -> {
-                    navController.navigate(R.id.buyerProfileFragment2)
-                    Toast.makeText(this, "Drawer: Profile Clicked", Toast.LENGTH_SHORT).show()
+                    navigateWithToast("Drawer: Profile Clicked") {
+                        navController.navigate(R.id.buyerProfileFragment2)
+                    }
                 }
                 R.id.nav_orders -> {
-                    navController.navigate(R.id.buyerNotifFragment)
-                    Toast.makeText(this, "Drawer: Orders Clicked", Toast.LENGTH_SHORT).show()
+                    navigateWithToast("Drawer: Orders Clicked") {
+                        navController.navigate(R.id.buyerNotifFragment)
+                    }
                 }
                 R.id.nav_logout -> {
                     auth.signOut()
-                    val intent = Intent(this, AuthActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    val intent = Intent(this, AuthActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
                     startActivity(intent)
                     finish()
-                    Toast.makeText(this, "Drawer: Logout Clicked", Toast.LENGTH_SHORT).show()
+                    showToast("Drawer: Logout Clicked")
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private inline fun navigateWithToast(message: String, action: () -> Unit) {
+        showToast(message)
+        action()
     }
 }
