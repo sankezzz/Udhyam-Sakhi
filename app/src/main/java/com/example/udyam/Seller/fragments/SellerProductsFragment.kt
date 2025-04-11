@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.udyam.R
 import com.example.udyam.Seller.AddProductActivity
 import com.example.udyam.adapters.ProductAdapter
@@ -37,9 +37,13 @@ class SellerProductsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ProductAdapter(productList)
-        binding.productsRv.layoutManager = GridLayoutManager(requireContext(), 1)
+        // Pass a click listener, even if just a simple toast or placeholder
+        adapter = ProductAdapter(productList) { clickedProduct ->
+            Toast.makeText(requireContext(), "Clicked: ${clickedProduct.name}", Toast.LENGTH_SHORT).show()
+            // Optional: Navigate to a detail/edit screen here if needed
+        }
 
+        binding.productsRv.layoutManager = GridLayoutManager(requireContext(), 1)
         binding.productsRv.adapter = adapter
 
         fetchMyProducts()
@@ -48,7 +52,6 @@ class SellerProductsFragment : Fragment() {
             val intent = Intent(activity, AddProductActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
-
         }
     }
 
@@ -67,7 +70,7 @@ class SellerProductsFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener {
-                // Handle failure (e.g., Toast)
+                Toast.makeText(requireContext(), "Failed to load products", Toast.LENGTH_SHORT).show()
             }
     }
 }

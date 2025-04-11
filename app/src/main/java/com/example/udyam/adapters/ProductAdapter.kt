@@ -11,7 +11,8 @@ import com.example.udyam.R
 import com.example.udyam.models.Product
 
 class ProductAdapter(
-    private val productList: List<Product>
+    private val productList: List<Product>,
+    private val onItemClick: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -22,7 +23,7 @@ class ProductAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_producy, parent, false) // make sure your file name is item_product.xml
+            .inflate(R.layout.item_producy, parent, false)
         return ProductViewHolder(view)
     }
 
@@ -33,8 +34,12 @@ class ProductAdapter(
 
         Glide.with(holder.itemView.context)
             .load(product.imageUrl)
-            .placeholder(R.drawable.loginimage) // fallback image
+            .placeholder(R.drawable.loginimage)
             .into(holder.imgProduct)
+
+        holder.itemView.setOnClickListener {
+            onItemClick(product)
+        }
     }
 
     override fun getItemCount(): Int = productList.size

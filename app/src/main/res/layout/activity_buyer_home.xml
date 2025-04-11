@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".buyer.BuyerHomeActivity">
+    tools:context=".buyerHome.BuyerHomeActivity">
 
         <!-- Main Content -->
         <androidx.constraintlayout.widget.ConstraintLayout

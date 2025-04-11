@@ -13,7 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.udyam.MainActivity
 import com.example.udyam.R
 import com.example.udyam.Seller.SellerHomeActivity
-import com.example.udyam.buyer.BuyerHomeActivity
+import com.example.udyam.buyerHome.BuyerHomeActivity
+
 import com.example.udyam.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -37,6 +38,36 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Handle already logged-in user
+        if (auth.currentUser != null) {
+            val uid = auth.currentUser!!.uid
+            db.collection("users").document(uid).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val role = document.getString("role")
+                        when (role) {
+                            "seller" -> {
+                                startActivity(Intent(activity, SellerHomeActivity::class.java))
+                                requireActivity().finish()
+                            }
+                            "buyer" -> {
+                                startActivity(Intent(activity, BuyerHomeActivity::class.java))
+                                requireActivity().finish()
+                            }
+                            else -> {
+                                Toast.makeText(activity, "User role not recognized", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(activity, "User data not found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(activity, "Failed to fetch user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+        // MOVE THESE OUTSIDE THE IF BLOCK
         progressDialogLogin = ProgressDialog(activity)
 
         binding.signInTextToSignUp.setOnClickListener {
@@ -65,59 +96,93 @@ class LoginFragment : Fragment() {
     }
 
     private fun getTheUserSignedIn(email: String, password: String) {
-        progressDialogLogin.show()
-        progressDialogLogin.setMessage("Signing in")
+                progressDialogLogin.show()
+                progressDialogLogin.setMessage("Signing in")
 
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                progressDialogLogin.dismiss()
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        progressDialogLogin.dismiss()
 
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
+                        if (task.isSuccessful) {
+                            val user = auth.currentUser
 
-                    if (user != null && user.isEmailVerified) {
-                        val uid = user.uid
+                            if (user != null && user.isEmailVerified) {
+                                val uid = user.uid
 
-                        db.collection("users").document(uid).get()
-                            .addOnSuccessListener { document ->
-                                if (document.exists()) {
-                                    val role = document.getString("role")?.lowercase()
+                                db.collection("users").document(uid).get()
+                                    .addOnSuccessListener { document ->
+                                        if (document.exists()) {
+                                            val role = document.getString("role")?.lowercase()
 
-                                    when (role) {
-                                        "buyer" -> {
-                                            startActivity(Intent(activity, BuyerHomeActivity::class.java))
-                                            activity?.finish()
-                                        }
-                                        "seller" -> {
-                                            startActivity(Intent(activity, SellerHomeActivity::class.java))
-                                            activity?.finish()
-                                        }
-                                        else -> {
-                                            startActivity(Intent(activity, MainActivity::class.java))
-                                            activity?.finish()
+                                            when (role) {
+                                                "buyer" -> {
+                                                    startActivity(
+                                                        Intent(
+                                                            activity,
+                                                            BuyerHomeActivity::class.java
+                                                        )
+                                                    )
+                                                    activity?.finish()
+                                                }
+
+                                                "seller" -> {
+                                                    startActivity(
+                                                        Intent(
+                                                            activity,
+                                                            SellerHomeActivity::class.java
+                                                        )
+                                                    )
+                                                    activity?.finish()
+                                                }
+
+                                                else -> {
+                                                    startActivity(
+                                                        Intent(
+                                                            activity,
+                                                            MainActivity::class.java
+                                                        )
+                                                    )
+                                                    activity?.finish()
+                                                }
+                                            }
+                                        } else {
+                                            Toast.makeText(
+                                                activity,
+                                                "User data not found",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
                                     }
-                                } else {
-                                    Toast.makeText(activity, "User data not found", Toast.LENGTH_SHORT).show()
-                                }
+                                    .addOnFailureListener {
+                                        Toast.makeText(
+                                            activity,
+                                            "Failed to fetch user role",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            } else {
+                                Toast.makeText(
+                                    activity,
+                                    "Please verify your email",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                            .addOnFailureListener {
-                                Toast.makeText(activity, "Failed to fetch user role", Toast.LENGTH_SHORT).show()
-                            }
-                    } else {
-                        Toast.makeText(activity, "Please verify your email", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(activity, "Invalid Credentials", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
-                } else {
-                    Toast.makeText(activity, "Invalid Credentials", Toast.LENGTH_SHORT).show()
-                }
+                    .addOnFailureListener { exception ->
+                        progressDialogLogin.dismiss()
+                        if (exception is FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(activity, "Invalid Credentials", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            Toast.makeText(activity, "Authorization Failed", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
             }
-            .addOnFailureListener { exception ->
-                progressDialogLogin.dismiss()
-                if (exception is FirebaseAuthInvalidCredentialsException) {
-                    Toast.makeText(activity, "Invalid Credentials", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(activity, "Authorization Failed", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
-}
+
+
+        }

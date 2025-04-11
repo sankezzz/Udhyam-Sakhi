@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,12 +36,18 @@ class BuyerHomeFragment : Fragment() {
             Product("Bamboo Lamp", "460", "Eco-friendly decor", "https://via.placeholder.com/150")
         )
 
+        // Create a shared click listener for both adapters
+        val productClickListener: (Product) -> Unit = { product ->
+            Toast.makeText(requireContext(), "Clicked: ${product.name}", Toast.LENGTH_SHORT).show()
+            // You can navigate to a product detail screen here if needed
+        }
+
         // Setup Trending RecyclerView (Horizontal)
         trendingRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        trendingRecycler.adapter = ProductAdapter(sampleProducts)
+        trendingRecycler.adapter = ProductAdapter(sampleProducts, productClickListener)
 
         // Setup Explore RecyclerView (Grid)
         exploreRecycler.layoutManager = GridLayoutManager(requireContext(), 2)
-        exploreRecycler.adapter = ProductAdapter(sampleProducts)
+        exploreRecycler.adapter = ProductAdapter(sampleProducts, productClickListener)
     }
 }

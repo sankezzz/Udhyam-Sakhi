@@ -14,7 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class StoreActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityStoreBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
@@ -25,13 +24,35 @@ class StoreActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_store)
 
-
-
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+        // ✅ Fetch existing store data
+        fetchExistingStoreData()
+
         binding.saveBtn.setOnClickListener {
             saveStoreDetails()
+        }
+    }
+
+    private fun fetchExistingStoreData() {
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            firestore.collection("users").document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.contains("store")) {
+                        val store = document.get("store") as Map<*, *>
+
+                        binding.storeNameEt.setText(store["storeName"] as? String ?: "")
+                        binding.stLocationEt.setText(store["address"] as? String ?: "")
+                        binding.pincodeEt.setText(store["pincode"] as? String ?: "")
+                        binding.contact.setText(store["contact"] as? String ?: "")
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Failed to load store info: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 
@@ -52,17 +73,31 @@ class StoreActivity : AppCompatActivity() {
                 "storeName" to storeName,
                 "address" to address,
                 "pincode" to pincode,
-                "contact" to contact
+                "contact" to contact,
+                "userId" to userId
             )
 
+            val storeMap = hashMapOf(
+                "store" to storeData
+            )
+
+            // Save in user's document
             firestore.collection("users").document(userId)
-                .update("store", storeData)
+                .set(storeMap, com.google.firebase.firestore.SetOptions.merge())
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Store details saved!", Toast.LENGTH_SHORT).show()
-                    finish()
+                    // Save in global stores collection
+                    firestore.collection("stores").document(userId)
+                        .set(storeData)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Store details saved successfully!", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Failed to save store globally: ${it.message}", Toast.LENGTH_SHORT).show()
+                        }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error saving user store: ${it.message}", Toast.LENGTH_SHORT).show()
                 }
         } else {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
