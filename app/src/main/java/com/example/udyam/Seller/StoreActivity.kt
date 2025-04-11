@@ -74,6 +74,7 @@ class StoreActivity : AppCompatActivity() {
                 "address" to address,
                 "pincode" to pincode,
                 "contact" to contact,
+                "imageUrl" to "https://www.google.com/imgres?q=women%20store%20small%20business%20decoration%20items%20in%20dharamshala&imgurl=https%3A%2F%2Flookaside.instagram.com%2Fseo%2Fgoogle_widget%2Fcrawler%2F%3Fmedia_id%3D2938841593366418602&imgrefurl=https%3A%2F%2Fwww.instagram.com%2Fthecashmirstag%2Fp%2FCjI3N0oPNxc%2F&docid=E--UimdKO3zaUM&tbnid=S5HHDeFS4WyNoM&vet=12ahUKEwjU0tzFgs-MAxUUe2wGHdBdBggQM3oECFAQAA..i&w=1440&h=1800&hcb=2&ved=2ahUKEwjU0tzFgs-MAxUUe2wGHdBdBggQM3oECFAQAA",
                 "userId" to userId
             )
 
@@ -90,7 +91,7 @@ class StoreActivity : AppCompatActivity() {
                         .set(storeData)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Store details saved successfully!", Toast.LENGTH_SHORT).show()
-                            finish()
+
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, "Failed to save store globally: ${it.message}", Toast.LENGTH_SHORT).show()
