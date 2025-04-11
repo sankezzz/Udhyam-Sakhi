@@ -104,7 +104,6 @@ class StoresProductActivity : AppCompatActivity() {
         }
 
         val cartItem = hashMapOf(
-            "userId" to currentUser.uid,
             "name" to product.name,
             "price" to product.price,
             "imageUrl" to product.imageUrl,
@@ -112,7 +111,9 @@ class StoresProductActivity : AppCompatActivity() {
         )
 
         FirebaseFirestore.getInstance()
-            .collection("cart") // global collection
+            .collection("users")
+            .document(currentUser.uid)
+            .collection("cart")  // ✅ moved under user
             .add(cartItem)
             .addOnSuccessListener {
                 Toast.makeText(this, "${product.name} added to cart", Toast.LENGTH_SHORT).show()
@@ -123,5 +124,6 @@ class StoresProductActivity : AppCompatActivity() {
                 Log.e("CartError", "Error adding to cart", e)
             }
     }
+
 
 }

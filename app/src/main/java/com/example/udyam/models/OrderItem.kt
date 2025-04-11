@@ -1,8 +1,8 @@
 package com.example.udyam.models
 
 data class OrderItem(
-    val name: String,
-    val price: Int
+    val name: String = "",
+    val price: Int = 0
 )
 
 
